@@ -1,8 +1,9 @@
 import { useState } from "react";
 import ProductCard from "./components/ProductCard"
 import Modal from "./components/ui/Modal";
-import { productList } from "./data"
+import { productList,formInputList } from "./data"
 import Button from "./components/ui/Button";
+import Input from "./components/ui/Input";
 
 
 const App = () => {
@@ -16,6 +17,11 @@ const App = () => {
     setIsOpen(true)
   }
   const RenderProductList =productList.map(product => <ProductCard key={product.id} product={product} />);
+  const RenderFormInputList=formInputList.map(input => <div className="flex flex-col">
+    <label htmlFor={input.id} className="text-gray-700 font-medium text-sm mb-[1px]">{input.label}</label>
+    <Input type="text" id={input.id} name={input.name} />
+  </div>
+   )
   return (
     <main className="container">
               <Button className="bg-indigo-700 hover:bg-indigo-800" onClick={openModal}>ADD</Button>
@@ -24,10 +30,14 @@ const App = () => {
       {RenderProductList}
       </div>
       <Modal isOpen={isOpen} closeModal={closeModal} title="ADD A NEW PRODUCT">
+        <form className="space-y-3">
+        {RenderFormInputList}
         <div className="flex items-center space-x-3">
         <Button className="bg-indigo-700 hover:bg-indigo-800">SUBMIT</Button>
-        <Button className="bg-gray-300 hover:bg-gray-400">CANCEL</Button>
+        <Button className="bg-gray-400 hover:bg-gray-500">CANCEL</Button>
         </div>
+        </form>
+        
         </Modal>
       
     </main>
