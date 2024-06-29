@@ -34,7 +34,7 @@ const App = () => {
   const RenderProductList =productList.map(product => <ProductCard key={product.id} product={product} />);
   const RenderFormInputList=formInputList.map(input => <div className="flex flex-col">
     <label htmlFor={input.id} className="text-gray-700 font-medium text-sm mb-[1px]">{input.label}</label>
-    <Input type="text" id={input.id} name={input.name} value='' onChange={onchangeHandler} />
+    <Input type="text" id={input.id} name={input.name} value={input.name} onChange={onchangeHandler} />
   </div>
    )
   return (
