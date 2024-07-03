@@ -1,31 +1,26 @@
-import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, ReactNode, useState } from 'react'
+import { Fragment, ReactNode, memo } from "react";
+import { Dialog, Transition } from "@headlessui/react";
 
 interface IProps {
-    isOpen:boolean;
-    closeModal:()=>void;
-    title?:string;
-    children:ReactNode
-
+  title?: string;
+  isOpen: boolean;
+  children: ReactNode;
+  description?: string;
+  closeModal: () => void;
 }
 
-const Modal =({isOpen,closeModal,title,children}:IProps) =>{
-
-
+const Modal = ({
+  isOpen,
+  closeModal,
+  title,
+  description,
+  children,
+}: IProps) => {
   return (
     <>
-      {/* <div className="fixed inset-0 flex items-center justify-center">
-        <button
-          type="button"
-          onClick={openModal}
-          className="rounded-md bg-blue-900 px-4 py-2 text-sm font-medium text-white "
-        >
-          Open dialog
-        </button>
-      </div> */}
-
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
+          <div className="fixed inset-0 backdrop-blur-sm" aria-hidden="true" />
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -50,18 +45,18 @@ const Modal =({isOpen,closeModal,title,children}:IProps) =>{
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                  {title &&
-                  <Dialog.Title
-                    as="h3"
-                    className="text-lg font-medium leading-6 text-gray-900"
-                  >
-                  {title}
-</Dialog.Title>}
-                  
-
-                  <div className="mt-4">
-                    {children}
-                  </div>
+                  {title && (
+                    <Dialog.Title
+                      as="h3"
+                      className="text-lg font-medium leading-6 text-gray-900"
+                    >
+                      {title}
+                    </Dialog.Title>
+                  )}
+                  {description && (
+                    <p className="text-sm text-gray-500 mt-3">{description}</p>
+                  )}
+                  <div className="mt-4">{children}</div>
                 </Dialog.Panel>
               </Transition.Child>
             </div>
@@ -69,6 +64,7 @@ const Modal =({isOpen,closeModal,title,children}:IProps) =>{
         </Dialog>
       </Transition>
     </>
-  )
-}
-export default Modal;
+  );
+};
+
+export default memo(Modal);
